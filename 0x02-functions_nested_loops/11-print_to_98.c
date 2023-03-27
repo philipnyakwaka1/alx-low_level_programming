@@ -2,40 +2,26 @@
 #include "main.h"
 /**
  * print_to_98 - prints numbers n to 98
- * @i: interger
+ * @n: interger
  *
  * Return: success (0)
  */
-void print_to_98(int i)
+void print_to_98(int n)
 {
-	int x, y;
-
-	if (i <= 98)
+	if (n < 98)
 	{
-		for (x = i; x <= 98; x++)
+		for (n = n; n < 98; n++)
 		{
-			if (i != 98)
-			{
-				printf("%d, ", x);
-			}
-			else if (x == 98)
-			{
-				printf("%d\n", x);
-			}
+			printf("%d, ", n);
 		}
 	}
-	else if (i >= 98)
+	else
 	{
-		for (y = i; y >= 98; y++)
+		for (n = n; n > 98; n--)
 		{
-			if (y != 98)
-			{
-				printf("%d, ", y);
-			}
-			else if (y == 98)
-			{
-				printf("%d\n", y);
-			}
+			printf("%d, ", n);
+			printf("%d\n", 98);
 		}
 	}
 }
+
