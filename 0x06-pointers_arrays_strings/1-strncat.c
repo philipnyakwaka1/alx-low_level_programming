@@ -1,27 +1,29 @@
 #include "holberton.h"
 /**
- * _strncat - concatenate strings, defining the size of second string.
- * @dest: string with concatenation
- * @src: string to be concatenated
+ * _strncat - concatenate strings, defining the size of second string
+ * it will use at most n bytes from src; and
+ * src does not need to be null-terminated if it contains n or more bytes
+ * @dest: input string
+ * @src: input string
  * @n: size of second string
  * Return: Always 0.
  */
 char *_strncat(char *dest, char *src, int n)
 {
-	int lengthD, lengthS;
+	int x, y;
 
-	lengthD = 0;
-	lengthS = 0;
+	x = 0;
+	y = 0;
 
-	while (*(dest + lengthD) != '\0')
-		lengthD++;
+	while (*(dest + x) != '\0')
+		x++;
 
-	while (*(src + lengthS) != '\0' && lengthD < 97 && lengthS < n)
+	while (*(src + y) != '\0' && x < 97 && y < n)
 	{
-		*(dest + lengthD) = *(src + lengthS);
-		lengthD++;
-		lengthS++;
+		*(dest + x) = *(src + y);
+		x++;
+		y++;
 	}
-	*(dest + lengthD) = '\0';
+	*(dest + x) = '\0';
 	return (dest);
 }
