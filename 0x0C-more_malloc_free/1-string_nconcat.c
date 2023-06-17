@@ -1,7 +1,7 @@
 #include "main.h"
 #include <stdlib.h>
 /**
- * str_nconcat - concatenates two string
+ * string_nconcat - concatenates two string
  * @s1: input string
  * @s2: input string
  * @n: n bytes of string s2 to be concatenated
@@ -31,21 +31,20 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	if (n >= y)
 	{
 		k = i;
-		while (j < y)
+		for (j = 0; j < y; j++)
 		{
 			s3[k] = s2[j];
-			j++;
 			k++;
 		}
 		s3[k] = '\0';
 	}
 	else if (y > n)
 	{
+		j = 0;
 		k = i;
-		while (j < n)
+		for (j = 0; j < n; j++)
 		{
 			s3[k] = s2[j];
-			j++;
 			k++;
 		}
 		s3[k] = '\0';
