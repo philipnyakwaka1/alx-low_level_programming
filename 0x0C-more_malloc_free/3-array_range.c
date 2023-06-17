@@ -12,8 +12,7 @@ int *_memset(int *s, int min, int max)
 {
 	int i;
 
-	i = 0;
-	while (min <= max)
+	for (i = 0; i < (max - min) + 1; i++)
 	{
 		s[i] = min;
 		min++;
