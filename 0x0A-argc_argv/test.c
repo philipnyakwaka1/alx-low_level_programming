@@ -1,10 +1,10 @@
 #include "main.h"
 #include <stdio.h>
-int main(void)
+#include <stdlib.h>
+int main(int argc, char *argv[])
 {
-	char *s = "1234";
-	int i = _atoi(s);
-	printf("%d", i);
-	_putchar('\n');
+	int p;
+	p = atoi(argv[1]);
+	printf("%d\n", p);
 	return (0);
 }
