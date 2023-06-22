@@ -27,16 +27,18 @@ void print_numbers(const char *separator, const unsigned int n, ...)
 	va_list list;
 	unsigned int i;
 
-	if (_strlen(separator) != 0)
+	if (separator == NULL)
 	{
-		va_start(list, n);
-		for (i = 0; i < n; i++)
-		{
-			printf("%d", va_arg(list, int));
-			if (i == n - 1)
-				break;
-			printf("%s", separator);
-		}
-		printf("\n");
+		separator = "";
 	}
+
+	va_start(list, n);
+	for (i = 0; i < n; i++)
+	{
+		printf("%d", va_arg(list, int));
+		if (i == n - 1)
+			break;
+		printf("%s", separator);
+	}
+	printf("\n");
 }
