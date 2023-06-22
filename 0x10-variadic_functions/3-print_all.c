@@ -13,7 +13,6 @@ void print_all(const char * const format, ...)
 	char *separator;
 
 	separator = "";
-
 	va_start(list, format);
 	if (format)
 	{
@@ -38,6 +37,9 @@ void print_all(const char * const format, ...)
 				case 'f':
 					printf("%s%f", separator, va_arg(list, double));
 					break;
+				default:
+					x++;
+					continue;
 			}
 			separator = ", ";
 			x++;
