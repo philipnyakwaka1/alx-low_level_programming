@@ -28,6 +28,8 @@ int get_bit(unsigned long int n, unsigned int index)
 	int i, bin;
 	size_t num;
 
+	if (index > 63)
+		return (-1);
 	i = 0;
 	num = n;
 	if (n == 0)
