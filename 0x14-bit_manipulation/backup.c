@@ -23,9 +23,9 @@ unsigned int _strlen(char *str)
  */
 int get_bit(unsigned long int n, unsigned int index)
 {
-	char *s;
-	unsigned int len;
-	int i, bin;
+	char *s, *c;
+	unsigned int len, len1;
+	int i, j, k, bin;
 	size_t num;
 
 	i = 0;
@@ -51,7 +51,18 @@ int get_bit(unsigned long int n, unsigned int index)
 	}
 	s[i] = '\0';
 	len = _strlen(s);
-	if (index < len)
-		return (s[index] - '0');
+	c = malloc(sizeof(char) * len + 1);
+	k = 0;
+	for (j = len - 1; j >= 0; j--)
+	{
+		c[k] = s[j];
+		k++;
+	}
+	c[k] = '\0';
+	printf("%s\n", c);
+	printf("The string length is %u\n", _strlen(c));
+	len1 = _strlen(c);
+	if (index < len1)
+		return (c[len1 - index] - '0');
 	return (-1);
 }
