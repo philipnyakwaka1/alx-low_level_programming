@@ -21,16 +21,15 @@ int main(int argc, char *argv[])
 		printf("Error\n");
 		exit(2);
 
-	n = (char *)main;
 	y = 0;
 	while (y < x)
 	{
 		if (y == (x - 1))
 		{
-			printf("%02hhx\n", n[y]);
+			printf("%02hhx\n", *((char *)main + y));
 			break;
 		}
-		printf("%02hhx ", n[y]);
+		printf("%02hhx ", *((char *)main + y));
 		y++;
 	}
 	return (0);
