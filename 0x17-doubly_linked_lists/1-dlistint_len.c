@@ -1,10 +1,10 @@
 #include "lists.h"
 /**
- * print_dlistint - prints all the elements of a dlistint_t list
+ * dlistint_len - returns nuo of elements of a dlistint_t list
  * @h: head node
- * Return: number of nodes
+ * Return: number of elements
  */
-size_t print_dlistint(const dlistint_t *h)
+size_t dlistint_len(const dlistint_t *h)
 {
 	const dlistint_t *ptr;
 	size_t count;
@@ -13,7 +13,6 @@ size_t print_dlistint(const dlistint_t *h)
 	count = 0;
 	while (ptr != NULL)
 	{
-		printf("%d\n", ptr->n);
 		ptr = ptr->next;
 		count++;
 	}
