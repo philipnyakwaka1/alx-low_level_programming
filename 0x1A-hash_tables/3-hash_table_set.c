@@ -5,22 +5,31 @@
  * @ptr: pointer in hash table index
  * @new: node to be added
  * @key: key of new node
+ * Return: 1 on success, else 0
  */
-void add_node(hash_node_t *ptr, hash_node_t *new, const char *key)
+int add_node(hash_node_t **ptr, hash_node_t *new, const char *key)
 {
-	if (ptr == NULL)
-		ptr = new;
-	while (ptr != NULL)
+	hash_node_t *current;
+
+	current = *ptr;
+	if (*ptr == NULL)
+		*ptr = new;
+	while (current != NULL)
 	{
-		if (strcmp(ptr->key, key) == 0)
+		if (strcmp((current)->key, key) == 0)
 		{
-			free(ptr->value);
-			ptr->value = new->value;
+			free(current->value);
+			current->value = strdup(new->value);
+			free(new->key);
+			free(new->value);
+			free(new);
+			return (1);
 		}
-		ptr = ptr->next;
+		current = current->next;
 	}
-	new->next = ptr->next;
-	ptr = new;
+	new->next = *ptr;
+	*ptr = new;
+	return (1);
 }
 /**
  * hash_table_set - adds element to hash table
@@ -32,7 +41,7 @@ void add_node(hash_node_t *ptr, hash_node_t *new, const char *key)
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
 	unsigned long int index;
-	hash_node_t *new_node, *ptr;
+	hash_node_t *new_node;
 	char *key_copy;
 
 	key_copy = strdup(key);
@@ -58,7 +67,6 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	}
 	new_node->next = NULL;
 	index = key_index((const unsigned char *)key_copy, ht->size);
-	ptr = ht->array[index];
-	add_node(ptr, new_node, key);
-	return (0);
+	add_node(&(ht->array[index]), new_node, key);
+	return (1);
 }
