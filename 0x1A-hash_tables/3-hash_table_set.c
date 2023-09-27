@@ -78,6 +78,7 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 		}
 		current = current->next;
 	}
-	current->next = new;
+	new->next = ht->array[index];
+	ht->array[index] = new;
 	return (0);
 }
