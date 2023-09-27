@@ -1,18 +1,6 @@
 #include "hash_tables.h"
 
 /**
- * free_node - frees node
- * @node: node to be freed
- */
-void free_node(hash_node_t *node)
-{
-	free(node->key);
-	free(node->value);
-	free(node->next);
-	free(node);
-}
-
-/**
  * create_node - creates node
  * @key: node key
  * @value: node value
@@ -52,32 +40,26 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
 	hash_node_t *new, *current;
 	unsigned long int index;
-	char *new_value;
 
 	if (key == NULL || strlen(key) == 0)
 		return (0);
-	new = create_node(key, value);
-	if (new == NULL)
-		return (0);
 	index = key_index((const unsigned char *)key, ht->size);
-	if (ht->array[index] == NULL)
-		ht->array[index] = new;
 	current = ht->array[index];
 	while (current->next != NULL)
 	{
 		if (strcmp(key, current->key) == 0)
 		{
-			new_value = realloc(current->value, (strlen(value) + 1));
-			if (new_value == NULL)
-				return (0);
-			strcpy(new_value, value);
 			free(current->value);
-			current->value = new_value;
-			free_node(new);
-			return (1);
+			current->value = strdup(value);
+			return (0);
 		}
 		current = current->next;
 	}
+	new = create_node(key, value);
+	if (new == NULL)
+		return (0);
+	if (ht->array[index] == NULL)
+		ht->array[index] = new;
 	new->next = ht->array[index];
 	ht->array[index] = new;
 	return (0);
