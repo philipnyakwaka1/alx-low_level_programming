@@ -1,6 +1,47 @@
 #include "hash_tables.h"
 
 /**
+ * free_node - frees node
+ * @node: node to be freed
+ */
+void free_node(hash_node_t *node)
+{
+	free(node->key);
+	free(node->value);
+	free(node->next);
+	free(node);
+}
+
+/**
+ * create_node - creates node
+ * @key: node key
+ * @value: node value
+ * Return: pointer to newly created node
+ */
+hash_node_t *create_node(const char *key, const char *value)
+{
+	hash_node_t *new;
+
+	new = malloc(sizeof(hash_node_t));
+	if (new == NULL)
+		return (NULL);
+	new->key = strdup(key);
+	if (new->key == NULL)
+	{
+		free(new);
+		return (NULL);
+	}
+	new->value = strdup(value);
+	if (new->value == NULL)
+	{
+		free(new->key);
+		free(new);
+		return (NULL);
+	}
+	new->next = NULL;
+	return (new);
+}
+/**
  * hash_table_set - adds element to hash table
  * @ht: pointer to hash table
  * @key: table key
@@ -9,42 +50,34 @@
  */
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
+	hash_node_t *new, *current;
 	unsigned long int index;
-	hash_node_t *new_node, *current;
-	char *key_copy;
+	char *new_value;
 
-	key_copy = strdup(key);
-	if (key_copy == NULL || ht == NULL)
+	if (key == NULL || strlen(key) == 0)
 		return (0);
-	new_node = malloc(sizeof(hash_node_t));
-	if (new_node == NULL)
+	new = create_node(key, value);
+	if (new == NULL)
 		return (0);
-	new_node->key = key_copy;
-	new_node->value = strdup(value);
-	if (new_node->value == NULL)
-	{
-		free(new_node->key);
-		free(new_node);
-		return (0);
-	}
-	new_node->next = NULL;
-	index = key_index((const unsigned char *)key_copy, ht->size);
+	index = key_index((const unsigned char *)key, ht->size);
 	if (ht->array[index] == NULL)
-		ht->array[index] = new_node;
+		ht->array[index] = new;
 	current = ht->array[index];
-	while (current != NULL)
+	while (current->next != NULL)
 	{
-		if (strcmp((current)->key, key_copy) == 0)
+		if (strcmp(key, current->key) == 0)
 		{
+			new_value = realloc(current->value, (strlen(value) + 1));
+			if (new_value == NULL)
+				return (0);
+			strcpy(new_value, value);
 			free(current->value);
-			current->value = strdup(new_node->value);
-			free(new_node->key);
-			free(new_node);
+			current->value = new_value;
+			free_node(new);
 			return (1);
 		}
 		current = current->next;
 	}
-	new_node->next = ht->array[index];
-	ht->array[index] = new_node;
-	return (1);
+	current->next = new;
+	return (0);
 }
