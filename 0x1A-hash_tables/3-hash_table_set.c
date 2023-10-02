@@ -66,7 +66,7 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 			current = current->next;
 		}
 		current->next = create_node(key, value);
-		if (current->next == NULL)
+		if (create_node(key, value) == NULL)
 			return (0);
 	}
 	return (1);
